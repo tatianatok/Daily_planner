@@ -3,7 +3,6 @@ import Enum.Frequency;
 import Enum.Type;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
-
 public class DailyTask extends Task {
 
     public DailyTask(String title, String description, LocalDateTime dateTime, Type type, Frequency frequency) {

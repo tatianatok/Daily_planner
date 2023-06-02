@@ -1,10 +1,8 @@
 package AllTasks;
 import Enum.Frequency;
 import Enum.Type;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 public class MonthlyTask extends Task {
 
     public MonthlyTask(String title, String description, LocalDateTime dateTime, Type type, Frequency frequency) {

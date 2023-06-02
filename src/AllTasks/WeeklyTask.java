@@ -3,9 +3,7 @@ import Enum.Frequency;
 import Enum.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 public class WeeklyTask extends Task {
-
     public WeeklyTask(String title, String description, LocalDateTime dateTime, Type type, Frequency frequency) {
         super(title, description, dateTime, type, frequency);
     }

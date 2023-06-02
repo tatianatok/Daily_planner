@@ -6,7 +6,6 @@ import java.util.Objects;
 import Enum.Frequency;
 import Enum.Type;
 import Exceptions.IncorrectArgumentException;
-
 public abstract class Task implements Comparable<Task> {
     private static int idGenerator = 1;
     private int id;

@@ -7,10 +7,8 @@ import java.util.Scanner;
 import java.util.*;
 import java.time.LocalDateTime;
 import static AllTasks.TaskService.*;
-
 public class Main {
     private static final TaskService planner = new TaskService();
-
     public static void main(String[] args) {
         Task.currentLocalDateAndTime();
 
