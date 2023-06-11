@@ -9,11 +9,6 @@ public class OneTimeTask extends Task {
     }
 
     @Override
-    public int compareTo(Task otherTask) {
-        return super.compareTo(otherTask);
-    }
-
-    @Override
     public boolean appearsln(LocalDate localDate) {
         return localDate.equals(this.getDateTime().toLocalDate());
     }

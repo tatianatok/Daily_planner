@@ -1,29 +1,36 @@
 package AllTasks;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-import java.util.stream.Collectors;
+
 import Enum.Frequency;
 import Enum.Type;
 import Exceptions.IncorrectArgumentException;
 import Exceptions.TaskNotFoundException;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+import java.util.stream.Collectors;
 public class TaskService {
 
-    public static Map<Integer, Task> taskMap = new HashMap<>();
-    private static Set<Task> setTask = new HashSet<>();
+    private Map<Integer, Task> taskMap = new HashMap<>();
+    private final Set<Task> setTask = new HashSet<>();
+    private final TaskService taskService = new TaskService();
+    private final Scanner scanner = new Scanner(System.in).useDelimiter("\\n");
+    private Task task;
+    private LocalDate localDate;
 
-    private static Scanner scanner = new Scanner(System.in).useDelimiter("\\n");
-    private static Task task;
-    static LocalDate localDate;
+    public void addTask1(Task task) {
+        taskMap.put(task.getId(), task);
+    }
 
-    private static Collection<Task> getALlTaskMap() {
+
+    public Collection<Task> getALlTaskMap() {
         Collection<Task> values = taskMap.values();
         return values;
     }
 
-    static Collection<Task> getTaskMapForDate() {
+    public Collection<Task> getTaskMapForDate() {
         TreeSet<Task> taskForDate = new TreeSet<>();
         for (Task task : taskMap.values()) {
             if (task.appearsln(dateFor())) {
@@ -36,7 +43,7 @@ public class TaskService {
         return taskForDate;
     }
 
-    public static void getAllByDate(LocalDate localDate) throws TaskNotFoundException {
+    public void getAllByDate(LocalDate localDate) throws TaskNotFoundException {
         for (Map.Entry<Integer, Task> taskMap : taskMap.entrySet()) {
             LocalDate date = taskMap.getValue().getDateTime().toLocalDate();
             try {
@@ -44,7 +51,7 @@ public class TaskService {
                     System.out.println(taskMap.getKey() + " " + taskMap.getValue());
                 }
             } catch (NullPointerException e) {
-                System.out.println("Нет заданий на указанную дату: ");
+                System.out.println("Нет задачи по выбранной дате: ");
             }
             if (localDate.isAfter(date) && taskMap.getValue().appearsln(localDate)) {
                 System.out.println(taskMap.getKey() + " " + taskMap.getValue());
@@ -52,7 +59,7 @@ public class TaskService {
         }
     }
 
-    static void printMenu() {
+    public void printMenu() {
         System.out.println();
         System.out.println("Доступные команды: " +
                 "\n 1 - Добавить задание " +
@@ -66,16 +73,16 @@ public class TaskService {
                 "\n 0 - Выйти из меню");
     }
 
-    static void remove(Scanner scanner) throws IncorrectArgumentException {
+    public void remove(Scanner scanner) throws IncorrectArgumentException {
         System.out.println("Введите id задания для удаления: ");
         for (Task task : getALlTaskMap()) {
         }
         while (true) {
             try {
                 System.out.println("Выберите задание для удаления: ");
-                String idline = scanner.nextLine();
-                int id = Integer.parseInt(idline);
-                TaskService.removeId(id);
+                String idLine = scanner.nextLine();
+                int id = Integer.parseInt(idLine);
+                taskService.removeId(id);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Неверный id");
@@ -85,16 +92,16 @@ public class TaskService {
         }
     }
 
-    private static void removeId(int id) throws TaskNotFoundException {
+    public void removeId(int id) throws TaskNotFoundException {
         if (taskMap.containsKey(id)) {
             taskMap.remove(id);
-            TaskService.setTask.add(taskMap.remove(id));
+            taskService.setTask.add(taskMap.remove(id));
         } else {
             throw new TaskNotFoundException("id не найден");
         }
     }
 
-    static void ofDeletedTasks() {
+    public void ofDeletedTasks() {
         if (setTask.size() > 0) {
             System.out.println("В архиве количество удаленных заданий: " + setTask.size());
             for (Task task : setTask) {
@@ -105,31 +112,31 @@ public class TaskService {
         }
     }
 
-    private static void MM(int id) {
+    public void MM(int id) {
         Task task = taskMap.get(id);
         setTask.add(task);
         taskMap.remove(id);
     }
 
-    static void findTaskOnDate() {
+    public void findTaskOnDate() {
         for (Map.Entry<Integer, Task> taskMap : taskMap.entrySet()) {
             System.out.println(taskMap.getKey() + " " + taskMap.getValue());
         }
     }
 
-    static void addTask() throws IncorrectArgumentException {
+    public void addTask() throws IncorrectArgumentException {
         while (true) {
-            try {
-                int id = task.getId();
-                taskMap.put(task.getId(), task);
-            } catch (NullPointerException e) {
-                System.out.println();
-            }
-            TaskService.selectType(scanner);
-            TaskService.selectFrequency(scanner);
-            TaskService.comeUpTitle(scanner);
-            TaskService.comeUpDescription(scanner);
-            TaskService.askDateTime(scanner);
+           try {
+             int id = task.getId();
+             taskMap.put(task.getId(), task);
+             } catch (NullPointerException e) {
+               System.out.println();
+           }
+            taskService.selectType(scanner);
+            taskService.selectFrequency(scanner);
+            taskService.comeUpTitle(scanner);
+            taskService.comeUpDescription(scanner);
+            taskService.askDateTime(scanner);
             try {
                 System.out.println("Задание добавлено!");
                 System.out.println(task.toString());
@@ -139,11 +146,7 @@ public class TaskService {
         }
     }
 
-    public void add(Task task) {
-        taskMap.put(task.getId(), task);
-    }
-
-    private static void selectType(Scanner scanner) {
+    public void selectType(Scanner scanner) {
         try {
             System.out.print("Выберите тип задания: \n 1 - Рабочее \n 2 - Личное");
             Type type;
@@ -168,7 +171,7 @@ public class TaskService {
         }
     }
 
-    private static void selectFrequency(Scanner scanner) {
+    public void selectFrequency(Scanner scanner) {
         try {
             System.out.println("Выберите периодичность задания: " +
                     "\n 1 – однократное " +
@@ -210,7 +213,7 @@ public class TaskService {
         }
     }
 
-    private static void comeUpTitle(Scanner scanner) throws IncorrectArgumentException {
+    public void comeUpTitle(Scanner scanner) throws IncorrectArgumentException {
         System.out.print("Добавьте название задачи! ");
         String title = scanner.next();
         if (title == null && title.isEmpty() && title.isBlank()) {
@@ -226,7 +229,7 @@ public class TaskService {
         }
     }
 
-    private static void comeUpDescription(Scanner scanner) throws IncorrectArgumentException {
+    public void comeUpDescription(Scanner scanner) throws IncorrectArgumentException {
         System.out.print("Добавьте краткое описание задачи! ");
         String description = scanner.next();
         if (description == null && description.isEmpty() && description.isBlank()) {
@@ -242,7 +245,7 @@ public class TaskService {
         }
     }
 
-    static void changeUpTitle() {
+    public void changeUpTitle() {
         System.out.print("Введите id, чтобы изменить название задачи: ");
         int id = scanner.nextInt();
         System.out.println("Введен id: " + id);
@@ -256,7 +259,7 @@ public class TaskService {
         }
     }
 
-    static void changeUpDescription() {
+    public void changeUpDescription() {
         System.out.print("Введите id, чтобы изменить описание задачи: ");
         int id = scanner.nextInt();
         System.out.println("Введен id: " + id);
@@ -270,7 +273,7 @@ public class TaskService {
         }
     }
 
-    static void toFindTasks() {
+    public void toFindTasks() {
         System.out.println("Найти задачу: ");
         Comparator<Map.Entry<Integer, Task>> comparator = Comparator.comparing(o -> o.getValue().getDateTime());
         taskMap = taskMap.entrySet()
@@ -287,7 +290,7 @@ public class TaskService {
         taskMap.entrySet().forEach(System.out::println);
     }
 
-    private static void askDateTime(Scanner scanner) {
+    public void askDateTime(Scanner scanner) {
         while (true) {
             try {
                 System.out.println("Заполните дату в указанном формате: " + "dd.MM.yyyy HH:mm");
@@ -303,9 +306,13 @@ public class TaskService {
         }
     }
 
-    private static LocalDate dateFor() {
+    public LocalDate dateFor() {
         Scanner scanDateY = new Scanner(System.in);
         LocalDate dateForY = LocalDate.parse(scanDateY.next());
         return dateForY;
+    }
+
+    public Set<Integer> keySet() {
+        return taskMap.keySet();
     }
 }

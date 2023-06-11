@@ -1,17 +1,19 @@
 package AllTasks;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.*;
-import java.util.Objects;
+
 import Enum.Frequency;
 import Enum.Type;
 import Exceptions.IncorrectArgumentException;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Objects;
 public abstract class Task implements Comparable<Task> {
-    private static int idGenerator = 1;
+    private int idGenerator = 1;
     private int id;
     private String title;
     private String description;
-    private  LocalDateTime dateTime ;
+    private LocalDateTime dateTime;
     private final Type type;
     private final Frequency frequency;
 
@@ -24,13 +26,14 @@ public abstract class Task implements Comparable<Task> {
         this.frequency = frequency;
     }
 
-    public static int getIdGenerator() {
+    public int getIdGenerator() {
         return idGenerator;
     }
 
-    public static void setIdGenerator(int idGenerator) {
-        Task.idGenerator = idGenerator;
+    public void setIdGenerator(int idGenerator) {
+        this.idGenerator = idGenerator;
     }
+
 
     public int getId() {
         return id;

@@ -1,46 +1,41 @@
 package AllTasks;
+
 import Enum.Frequency;
 import Enum.Type;
 import Exceptions.IncorrectArgumentException;
-import Exceptions.TaskNotFoundException;
-import java.util.Scanner;
-import java.util.*;
+
 import java.time.LocalDateTime;
-import static AllTasks.TaskService.*;
+import java.util.Scanner;
+import java.util.Set;
+
 public class Main {
-    private static final TaskService planner = new TaskService();
-    public static void main(String[] args) {
-        Task.currentLocalDateAndTime();
+    public TaskService taskService = new TaskService();
 
-        OneTimeTask oneTask1 = new OneTimeTask("прием у педиатра", "получить справку в бассейн", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ONCE);
-        OneTimeTask oneTask2 = new OneTimeTask("купить цветы", "в подарок учителю", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ONCE);
-        DailyTask dailyTask1 = new DailyTask("проверить почту", "ежедневная рассылка для персонала", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_DAILY);
-        WeeklyTask weeklyTask1 = new WeeklyTask("подготовить отчет", "сведения о сотрудниках в отпусках и на больничных", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_WEEKLY);
-        WeeklyTask weeklyTask2 =new WeeklyTask("сделать уборку", "разложить вещи по местам, протереть пыль, вымыть пол", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_WEEKLY);
-        MonthlyTask monthlyTask1 = new MonthlyTask("сдать табель рабочего времени", "учет рабочего времени сменного персонала", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_MONTHLY);
-        MonthlyTask monthlyTask2 = new MonthlyTask("сходить в кино", "выбрать интересный фильм", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_MONTHLY);
-        YearlyTask yearlyTask1 = new YearlyTask("день рождения у А", "не забыть поздравить", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ANNUALLY);
+        public void main(String[] args) {
 
-        System.out.println("Добавлены задачи: ");
-        TaskService.taskMap.put(oneTask1.getId(), oneTask1);
-        TaskService.taskMap.put(oneTask2.getId(), oneTask2);
-        TaskService.taskMap.put(dailyTask1.getId(), dailyTask1);
-        TaskService.taskMap.put(weeklyTask1.getId(), weeklyTask1);
-        TaskService.taskMap.put(weeklyTask2.getId(), weeklyTask2);
-        TaskService.taskMap.put(monthlyTask1.getId(), monthlyTask1);
-        TaskService.taskMap.put(monthlyTask2.getId(), monthlyTask2);
-        TaskService.taskMap.put(yearlyTask1.getId(), yearlyTask1);
-        TaskService.findTaskOnDate();
-        System.out.println();
+            Task.currentLocalDateAndTime();
 
-        TaskService.taskMap.remove(oneTask2.getId(), oneTask2);
-        TaskService.taskMap.remove(weeklyTask2.getId(), weeklyTask2);
-        TaskService.taskMap.remove(monthlyTask2.getId(), monthlyTask2);
-        System.out.println("Остались задачи: ");
-        TaskService.findTaskOnDate();
-        System.out.println();
+            OneTimeTask oneTask1 = new OneTimeTask("прием у педиатра", "получить справку в бассейн", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ONCE);
+            OneTimeTask oneTask2 = new OneTimeTask("купить цветы", "в подарок учителю", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ONCE);
+            DailyTask dailyTask1 = new DailyTask("проверить почту", "ежедневная рассылка для персонала", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_DAILY);
+            WeeklyTask weeklyTask1 = new WeeklyTask("подготовить отчет", "сведения о сотрудниках в отпусках и на больничных", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_WEEKLY);
+            WeeklyTask weeklyTask2 = new WeeklyTask("сделать уборку", "разложить вещи по местам, протереть пыль, вымыть пол", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_WEEKLY);
+            MonthlyTask monthlyTask1 = new MonthlyTask("сдать табель рабочего времени", "учет рабочего времени сменного персонала", LocalDateTime.now(), Type.WORK, Frequency.FREQUENCY_MONTHLY);
+            MonthlyTask monthlyTask2 = new MonthlyTask("сходить в кино", "выбрать интересный фильм", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_MONTHLY);
+            YearlyTask yearlyTask1 = new YearlyTask("день рождения у А", "не забыть поздравить", LocalDateTime.now(), Type.PERSONAL, Frequency.FREQUENCY_ANNUALLY);
 
-        Set<Integer> keys = TaskService.taskMap.keySet();
+            System.out.println("Добавлены задачи: ");
+            taskService.addTask1(oneTask2);
+            taskService.addTask1(monthlyTask1);
+
+            taskService.findTaskOnDate();
+            System.out.println();
+
+            System.out.println("Остались задачи: ");
+            taskService.findTaskOnDate();
+            System.out.println();
+
+        Set<Integer> keys = taskService.keySet();
         System.out.println("Ключи: " + keys );
 
         System.out.println();
@@ -48,33 +43,33 @@ public class Main {
             label:
             while (true) {
                 System.out.println("Пожалйста, выберите команду из пунта меню: ");
-                printMenu();
+                taskService.printMenu();
                 if (scanner.hasNext()) {
                     int menu = scanner.nextInt();
                     switch (menu) {
                         case 1:
-                            addTask();
+                            taskService.addTask();
                             break;
                         case 2:
-                            remove(scanner);
+                            taskService.remove(scanner);
                             break;
                         case 3:
-                            getAllByDate(localDate);
+                            taskService.getAllByDate(localDate);
                             break;
                         case 4:
-                            getTaskMapForDate();
+                            taskService.getTaskMapForDate();
                             break;
                         case 5:
-                            ofDeletedTasks();
+                            taskService.ofDeletedTasks();
                             break;
                         case 6:
-                            changeUpTitle();
+                            taskService.changeUpTitle();
                             break;
                         case 7:
-                            changeUpDescription();
+                            taskService.changeUpDescription();
                             break;
                         case 8:
-                            toFindTasks();
+                            taskService.toFindTasks();
                             break;
                         case 0:
                             break label;
@@ -86,14 +81,12 @@ public class Main {
             }
             System.out.println("Итоговый список задач");
 
-        }
-        catch (IncorrectArgumentException e) {
+        } catch (IncorrectArgumentException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
             throw new RuntimeException(e);
-        }
-        catch (TaskNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (TaskNotFoundException e) {
+           throw new RuntimeException(e);
         }
     }
 }

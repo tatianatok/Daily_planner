@@ -9,11 +9,6 @@ public class YearlyTask extends Task {
     }
 
     @Override
-    public int compareTo(Task otherTask) {
-        return super.compareTo(otherTask);
-    }
-
-    @Override
     public boolean appearsln(LocalDate localDate) {
         LocalDate date = getDateTime().toLocalDate();
         return localDate.equals(date) || (localDate.isAfter(date) &&
