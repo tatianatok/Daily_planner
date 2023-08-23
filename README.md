@@ -1,6 +1,6 @@
-<h1><b></b>Курсовая работа 2 курса<br> онлайн-университета Skypro<b></b></h1>
-<h3>Cервис по управлению задачами по типу ежедневника</h3>
+<h1><b></b>Course work 2nd grade<br> of Skypro Online University<b></b></h1>
+<h3>Task management service by type of diary planner</h3>
 
-Приложение, в которое можно заносить новые задачи через консоль или через переменные, удалять задачи и получать список всех
-задач на день с помощью методов. Удаленные задачи перемещаются в архив, где их можно посмотреть. 
-Все операции с задачами осуществляются через меню. 
+An application in which you can enter new tasks through the console or through variables, delete tasks and get a list of all
+tasks for the day. Deleted tasks are moved to the archive, where they can be viewed. 
+All operations with tasks are carried out through the menu.
